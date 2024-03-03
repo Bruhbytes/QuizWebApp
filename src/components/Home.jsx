@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 
 
 const Home = () => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
     
 
     useEffect(() => {
         const fetchData = async () => {
-            fetch('/getQuestion')
-            .then(response => {
-                if(response.ok){
-                    const jsonData = response.json()
-                    setData(jsonData);
-                    console.log(jsonData)
-                }
+            fetch('/question')
+            .then(async (response) => {                
                 if(!response.ok){
                     throw Error("Could not get data");
                 }
+                const jsonData = await response.json()
+                setData(jsonData);
+                console.log(jsonData)                
             })
             .catch(err => {
                 console.log(err);
@@ -27,7 +25,10 @@ const Home = () => {
     }, [])
     
     return(
-        <div><h1>Home</h1></div>
+        <div>
+            <h1>Home</h1>
+            
+        </div>        
     );
 }
 

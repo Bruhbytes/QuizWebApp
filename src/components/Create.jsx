@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const Create = () => {
+    const [quizName, setQuizName] = useState("");
     const [question, setQuestion] = useState("");
     const [options, setOptions] = useState(["", "", "", ""]);
     const [correct, setCorrect] = useState("");
@@ -15,12 +16,13 @@ const Create = () => {
         e.preventDefault();
 
         const data = {
+            quizName,
             question,
             options,
             correct
         }
 
-        fetch("/create", {
+        fetch("/question", {
             method:"POST",
             headers:{
                 'Content-Type':'application/json',
@@ -48,7 +50,12 @@ const Create = () => {
         <div>
             <h3>Enter your Question</h3>
             <form onSubmit={handleSubmit}>
-                <div class="mb-3">
+                <div className="mb-3">
+                    <label for="exampleFormControlInput1" className="form-label">Give existing Quiz name</label>
+                    <input type="text" className="form-control" id="exampleFormControlInput1" value={quizName} onChange={(e) => setQuizName(e.target.value)}/>
+                </div>
+
+                <div className="mb-3">
                     <label for="exampleFormControlInput1" className="form-label">Question</label>
                     <input type="text" className="form-control" id="exampleFormControlInput1" value={question} onChange={(e) => setQuestion(e.target.value)}/>
                 </div>
@@ -69,7 +76,7 @@ const Create = () => {
                 })}
 
 
-                <div class="mb-3">
+                <div className="mb-3">
                     <label for="exampleFormControlInput1" className="form-label">Correct answer</label>
                     <input type="text" className="form-control" id="exampleFormControlInput1" value={correct} onChange={(e) => setCorrect(e.target.value)} />
                 </div>
