@@ -37,6 +37,7 @@ const Create = () => {
                 setQuestion('');
                 setOptions(['', '', '', '']);
                 setCorrect('');
+                setQuizName('');
             } else {
                 console.error('Failed to add question');
             }
