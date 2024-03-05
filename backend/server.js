@@ -2,11 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config()
+const cors = require('cors');
 
 const questionRoutes = require('./routes/questionRoute');
 const quizRoutes = require('./routes/quizRoutes');
 
 const app = express();
+app.use(cors({
+    origin: [`${process.env.FRONTEND_URL}`],
+}))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 

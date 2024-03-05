@@ -10,4 +10,21 @@ const getQuiz = async (req, res) => {
     }
 }
 
-module.exports = {getQuiz};
+const postQuiz = async (req, res) => {
+    const {name} = req.body;
+
+    const newQuiz = new Quiz({
+        name: name,
+        questions: []
+    });
+    await newQuiz.save()
+    .then(response => {
+        res.status(200).json({"msg": "Successfully created new quiz"});
+    })
+    .catch(err =>{
+        res.status(500).json({"err": "Internal server error", err});
+        console.log(err);
+    })
+}
+
+module.exports = {getQuiz, postQuiz};

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import axios from "axios";
+const backendUrl = process.env.REACT_APP_URL;
 
 const Home = () => {
     const [data, setData] = useState(null);
@@ -7,14 +8,16 @@ const Home = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            fetch('/question')
+            axios.get(`${backendUrl}/question`)
             .then(async (response) => {                
-                if(!response.ok){
-                    throw Error("Could not get data");
+                if(response.status !== 200){
+                    console.log("Could not get data");
                 }
-                const jsonData = await response.json()
-                setData(jsonData);
-                console.log(jsonData)                
+                else{
+                    const jsonData = await response.data;
+                    setData(jsonData);
+                    console.log(jsonData)                
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -26,8 +29,7 @@ const Home = () => {
     
     return(
         <div>
-            <h1>Home</h1>
-            
+            <h1>Home</h1>                     
         </div>        
     );
 }

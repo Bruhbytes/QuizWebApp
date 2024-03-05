@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios';
 
 const Create = () => {
     const [quizName, setQuizName] = useState("");
@@ -20,17 +21,12 @@ const Create = () => {
             question,
             options,
             correct
-        }
-
-        fetch("/question", {
-            method:"POST",
-            headers:{
-                'Content-Type':'application/json',
-            },
-            body: JSON.stringify(data)
-        })
+        }        
+       
+        axios.post('http://localhost:4000/question', JSON.stringify(data),
+         {headers:{"Content-Type" : "application/json"}})
         .then(response => {
-            if (response.ok) {
+            if (response.status === 200) {
                 console.log('Question added successfully!');
                 console.log(response);
                 // Reset the form after successful submission
@@ -43,7 +39,7 @@ const Create = () => {
             }
         })
         .catch(error => {
-            console.error('Error adding question:', error);
+            console.error('Error adding question:', error.response.data);
         });
     }
 
